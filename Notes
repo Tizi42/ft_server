@@ -1,0 +1,23 @@
+#Notes for project ft_server
+#BY tyuan@student.42.fr
+
+#1.COMMANDS NOT USED
+
+#If decompress using instruction RUN instead of ADD
+	cd /var/www/html/
+	wget https://wordpress.org/latest.tar.gz
+	tar -xvzf latest.tar.gz (OR -xf)
+
+#If log in with 'root' as user and without password
+	echo "CREATE DATABASE wpdb; \
+	GRANT ALL ON wpdb.* TO 'root'@'localhost' WITH GRANT OPTION; \
+	FLUSH PRIVILEGES; \
+	UPDATE mysql.user set plugin='mysql_native_password' WHERE user='root';" \
+	| mysql -u root
+
+#2.COMMAND FOR START THE SERVER
+
+#Run these two commands in the repository where there is Dockerfile
+#Add --env autoindex=0 to turn off autoindex of nginx server
+	docker build -t web .
+	docker run -it [--env autoindex=0] -p 80:80 -p 443:443 web
